@@ -18,7 +18,7 @@ public class ArticleController {
     private final ArticleService articleManager;
 
     @PostMapping
-    public ResponseEntity<Article> createOrUpdateArticle(@RequestBody Article article) {
+    public ResponseEntity<Article> createArticle(@RequestBody Article article) {
         Article savedArticle = articleManager.saveArticle(article);
         return ResponseEntity.ok(savedArticle);
     }

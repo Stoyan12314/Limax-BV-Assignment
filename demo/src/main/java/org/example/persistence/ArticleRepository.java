@@ -1,15 +1,14 @@
 package org.example.persistence;
 
-import org.example.persistence.entity.InventoryItem;
-import org.springframework.data.domain.Page;
+import org.example.persistence.entity.ArticleEntity;
 
-import org.springframework.data.domain.Pageable;
+import java.util.List;
 import java.util.Optional;
 
 public interface ArticleRepository {
-    Page<InventoryItem> getAllUsers(Pageable pageable);
-    Page<InventoryItem> getUsersByEmail(String email, Pageable pageable);
-    InventoryItem findUserByEmail(String email);
-    Optional<InventoryItem> findUserById(Long id);
-    InventoryItem saveUser(InventoryItem user);
+    ArticleEntity save(ArticleEntity articleEntity);
+    Optional<ArticleEntity> findById(Long id);
+
+    List<ArticleEntity> findAll();
+    void deleteById(Long id);
 }

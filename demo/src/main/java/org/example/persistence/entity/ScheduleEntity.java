@@ -16,16 +16,15 @@ public class ScheduleEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+
     @JoinColumn(name = "farmer_id", nullable = false)
-    private FarmerEntity farmer;
+    private Long farmerId;
 
     private LocalDate date;
     private LocalTime time; // Optional
 
-    @ManyToOne
-    @JoinColumn(name = "article_id")
-    private ArticleEntity article;
+    @JoinColumn(name = "articleId")
+    private Long articleId;
 
     private int quantity; // Optional
     private String status; // Consider using Enum for predefined statuses

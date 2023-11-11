@@ -10,14 +10,14 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class InventoryItem {
+public class InventoryItemEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+
     @JoinColumn(name = "article_id", nullable = false)
-    private ArticleEntity article;
+    private Long article;
 
     private int quantity;
     private String location; // Can be an Enum for predefined locations

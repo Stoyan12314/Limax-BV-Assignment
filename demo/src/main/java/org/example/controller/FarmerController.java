@@ -15,7 +15,7 @@ import java.util.List;
 public class FarmerController {
     private final FarmerService farmerService;
     @PostMapping
-    public ResponseEntity<Farmer> createOrUpdateFarmer(@RequestBody Farmer farmer) {
+    public ResponseEntity<Farmer> createFarmer(@RequestBody Farmer farmer) {
         Farmer savedFarmer = farmerService.createFarmer(farmer);
         return ResponseEntity.ok(savedFarmer);
     }

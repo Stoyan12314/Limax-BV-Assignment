@@ -17,7 +17,7 @@ public class InventoryController {
     private final InventoryService inventoryService;
 
     @PostMapping
-    public ResponseEntity<InventoryItem> createOrUpdateInventoryItem(@RequestBody InventoryItem inventoryItem) {
+    public ResponseEntity<InventoryItem> createInventoryItem(@RequestBody InventoryItem inventoryItem) {
         InventoryItem savedInventoryItem = inventoryService.saveInventoryItem(inventoryItem);
         return ResponseEntity.ok(savedInventoryItem);
     }

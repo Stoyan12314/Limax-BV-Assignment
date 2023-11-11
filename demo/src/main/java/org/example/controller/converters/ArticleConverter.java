@@ -9,7 +9,6 @@ public class ArticleConverter {
     private ArticleConverter() {
     }
 
-    // Converts an ArticleEntity to an ArticleDTO
     public static Article entityToDto(ArticleEntity articleEntity) {
         if (articleEntity == null) {
             return null;

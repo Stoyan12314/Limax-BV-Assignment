@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("http://localhost:3000")
-@RequestMapping("/inventory")
+@RequestMapping("/shcedule")
 @AllArgsConstructor
 public class ScheduleController {
     private final ScheduleService scheduleService;

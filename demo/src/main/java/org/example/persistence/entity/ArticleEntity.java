@@ -16,7 +16,9 @@ public class ArticleEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-
+    @ManyToOne
+    @JoinColumn(name = "farmer_id")
+    private FarmerEntity farmer;
     private String name;
     private int quantity;
     private boolean isHighPriority;

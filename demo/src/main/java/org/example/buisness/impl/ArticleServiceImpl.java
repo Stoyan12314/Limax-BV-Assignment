@@ -21,8 +21,8 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public Article saveArticle(Article request) {
         ArticleEntity articleEntity = ArticleConverter.dtoToEntity(request);
-        articleEntity = articleRepository.save(articleEntity);
-        return request;
+        ArticleEntity savedEntity = articleRepository.save(articleEntity);
+        return ArticleConverter.entityToDto(savedEntity);
     }
 
     // Method to get an article by ID
@@ -38,7 +38,7 @@ public class ArticleServiceImpl implements ArticleService {
     public List<Article> getAllArticles() {
         return articleRepository.findAll().stream()
                 .map(ArticleConverter::entityToDto)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()); // Stream simplified
     }
 
     // Method to delete an article
@@ -46,7 +46,4 @@ public class ArticleServiceImpl implements ArticleService {
     public void deleteArticle(Long id) {
         articleRepository.deleteById(id);
     }
-
-
-
 }

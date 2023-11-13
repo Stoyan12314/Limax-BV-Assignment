@@ -36,12 +36,12 @@ class ArticleControllerTest {
 
     @Test
     void createArticleTest() throws Exception {
-        Article article = new Article(); // Populate the article object with test data as needed
+        Article article = new Article();
         when(articleService.saveArticle(any(Article.class))).thenReturn(article);
 
         mockMvc.perform(MockMvcRequestBuilders.post("/articles")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(new ObjectMapper().writeValueAsString(article))) // Serialize object to JSON
+                        .content(new ObjectMapper().writeValueAsString(article)))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(article.getId()));
 
@@ -64,8 +64,8 @@ class ArticleControllerTest {
 
     @Test
     void getAllArticlesTest() throws Exception {
-        Article article1 = new Article(); // populate article fields as needed
-        Article article2 = new Article(); // populate article fields as needed
+        Article article1 = new Article();
+        Article article2 = new Article();
         when(articleService.getAllArticles()).thenReturn(List.of(article1, article2));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/articles"))

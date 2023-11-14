@@ -32,15 +32,19 @@ class ArticleServiceImplTest {
     @Test
     @DisplayName("Should save and return an article")
     void saveArticleTest() {
-        Article article = new Article(); // Prepare your Article DTO
+        // Create an Article with data
+        Article article = new Article(1L, "Test Article", 10, false, "Warehouse 1", false, false);
 
-        // Stubbing with a lenient matcher
-        when(articleRepository.save(any(ArticleEntity.class))).thenReturn(new ArticleEntity());
+        // Create a corresponding ArticleEntity
+        ArticleEntity articleEntity = new ArticleEntity(1L, null, "Test Article", 10, false, "Warehouse 1", false, false);
+
+        // Stubbing to return the entity
+        when(articleRepository.save(any(ArticleEntity.class))).thenReturn(articleEntity);
 
         Article savedArticle = articleService.saveArticle(article);
 
         assertNotNull(savedArticle);
-        // Verify with the same lenient matcher
+        assertEquals("Test Article", savedArticle.getName());
         verify(articleRepository).save(any(ArticleEntity.class));
     }
 
@@ -48,17 +52,17 @@ class ArticleServiceImplTest {
     @DisplayName("Should return an article by ID")
     void getArticleByIdTest() {
         Long id = 1L;
-        ArticleEntity articleEntity = new ArticleEntity();
-        articleEntity.setId(id);
+
+        // Create a populated ArticleEntity
+        ArticleEntity articleEntity = new ArticleEntity(1L, null, "Test Article", 10, false, "Warehouse 1", false, false);
 
         when(articleRepository.findById(id)).thenReturn(Optional.of(articleEntity));
 
         Article result = articleService.getArticle(id);
 
         assertNotNull(result);
-
         assertEquals(id, result.getId());
-
+        assertEquals("Test Article", result.getName());
     }
 
     @Test
@@ -74,7 +78,7 @@ class ArticleServiceImplTest {
     @Test
     @DisplayName("Should get all articles")
     void getAllArticlesTest() {
-        ArticleEntity articleEntity = new ArticleEntity();
+        ArticleEntity articleEntity = new ArticleEntity(1L, null, "Test Article", 10, false, "Warehouse 1", false, false);
         List<ArticleEntity> articleEntities = Collections.singletonList(articleEntity);
 
         when(articleRepository.findAll()).thenReturn(articleEntities);

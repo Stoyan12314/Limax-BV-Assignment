@@ -2,6 +2,8 @@ package org.example.persistence.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.example.domain.Status;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -21,12 +23,12 @@ public class ScheduleEntity {
     private Long farmerId;
 
     private LocalDate date;
-    private LocalTime time; // Optional
+    private LocalTime time;
 
-    @JoinColumn(name = "articleId")
-    private Long articleId;
+    @JoinColumn(name = "InventortItem")
+    private Long inventoryItemId;
 
-    private int quantity; // Optional
-    private String status; // Consider using Enum for predefined statuses
+
+    private Status status;
 
 }

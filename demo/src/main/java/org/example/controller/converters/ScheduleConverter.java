@@ -18,12 +18,9 @@ public class ScheduleConverter {
         Schedule scheduleDto = new Schedule();
         scheduleDto.setId(scheduleEntity.getId());
         scheduleDto.setDate(scheduleEntity.getDate());
-        scheduleDto.setFarmerId(scheduleEntity.getFarmerId()); // Assuming you have farmer's ID in the DTO
-        scheduleDto.setArticleId(scheduleEntity.getArticleId()); // Assuming you have article's ID in the DTO
-        scheduleDto.setQuantity(scheduleEntity.getQuantity());
+        scheduleDto.setFarmerId(scheduleEntity.getFarmerId());
+        scheduleDto.setInventoryItemId(scheduleEntity.getInventoryItemId());
         scheduleDto.setStatus(scheduleEntity.getStatus());
-
-        // Additional fields can be set here
 
         return scheduleDto;
     }
@@ -35,12 +32,8 @@ public class ScheduleConverter {
         ScheduleEntity scheduleEntity = new ScheduleEntity();
         scheduleEntity.setId(scheduleDto.getId());
         scheduleEntity.setDate(scheduleDto.getDate());
-        scheduleEntity.setFarmerId(scheduleDto.getFarmerId()); // Set the provided FarmerEntity
-        scheduleEntity.setArticleId(scheduleEntity.getArticleId()); // Set the provided ArticleEntity
-        scheduleEntity.setQuantity(scheduleDto.getQuantity());
+        scheduleEntity.setFarmerId(scheduleDto.getFarmerId());
         scheduleEntity.setStatus(scheduleDto.getStatus());
-
-        // Additional fields can be set here
 
         return scheduleEntity;
     }

@@ -16,5 +16,4 @@ public class Farmer {
     private String location;
     private boolean isSpecialStatus;
 
-    private Set<Article> articles; // ArticleDTO is a simplified version of ArticleEntity suitable for data transfer
 }

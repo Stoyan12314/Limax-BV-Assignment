@@ -2,6 +2,7 @@ package org.example.persistence.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.example.domain.InventoryItem;
 
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -18,11 +19,11 @@ public class FarmerEntity {
     private Long id;
 
     private String name;
-    private String location; // Can be an Enum for predefined locations
+    private String location;
     private boolean isSpecialStatus;
-
-    // If there's a relationship with articles
-    @OneToMany(mappedBy = "farmer")
-    private Set<ArticleEntity> articles;
+    private Long scheduleId;
+    @ManyToOne
+    @JoinColumn(name = "inventoryItem_id", nullable = false)
+    private InventoryItemEntity inventoryItem;
 
 }

@@ -2,6 +2,7 @@ package org.example.persistence.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.example.domain.Location;
 
 
 @Entity
@@ -17,8 +18,9 @@ public class InventoryItemEntity {
 
 
     @JoinColumn(name = "article_id", nullable = false)
-    private Long article;
-
+    private Long articleId;
+    private Boolean priority;
+    private Boolean isWeekend;
     private int quantity;
-    private String location; // Can be an Enum for predefined locations
+    private Location location;
 }

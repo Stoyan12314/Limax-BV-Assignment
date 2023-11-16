@@ -19,7 +19,14 @@ public class InventoryRepositoryImpl implements InventoryRepository {
     public InventoryItemEntity save(InventoryItemEntity inventoryItemEntity) {
         return jpaInventoryRepository.save(inventoryItemEntity);
     }
-
+    @Override
+    public InventoryItemEntity update(InventoryItemEntity inventoryItemEntity) {
+        return jpaInventoryRepository.save(inventoryItemEntity);
+    }
+    @Override
+    public List<InventoryItemEntity> findAllHighPriorityItems() {
+        return  jpaInventoryRepository.findAllHighPriorityItems();
+    }
     @Override
     public Optional<InventoryItemEntity> findById(Long id) {
         return jpaInventoryRepository.findById(id);

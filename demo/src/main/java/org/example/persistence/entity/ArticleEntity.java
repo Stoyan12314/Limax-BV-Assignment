@@ -2,6 +2,13 @@ package org.example.persistence.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.example.domain.Farmer;
+import org.example.domain.Location;
+import org.example.domain.Season;
+import org.example.domain.Supplier;
+
+import java.time.Duration;
+import java.util.Set;
 
 
 @Entity
@@ -14,18 +21,13 @@ public class ArticleEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
-    @ManyToOne
-    @JoinColumn(name = "farmer_id")
-    private FarmerEntity farmer;
+
     private String name;
-    private int quantity;
-    private boolean isHighPriority;
-    private String location; // Can be an enum for predefined locations
-    private boolean isWeekendSpecial;
-    private boolean isNonRegularUserSpecial;
+    private String description;
 
-
+    private Supplier supplierReliability;
+    private Set<Season> seasonalDemand;
+    private Duration replenishmentLeadTime;
 
 }

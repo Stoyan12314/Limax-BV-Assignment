@@ -4,6 +4,8 @@ package org.example.controller.converters;
 import org.example.domain.Article;
 import org.example.persistence.entity.ArticleEntity;
 
+import java.time.Duration;
+
 
 public class ArticleConverter {
     private ArticleConverter() {
@@ -13,18 +15,13 @@ public class ArticleConverter {
         if (articleEntity == null) {
             return null;
         }
-
         Article articleDto = new Article();
-        articleDto.setId(articleEntity.getId());
         articleDto.setName(articleEntity.getName());
-        articleDto.setQuantity(articleEntity.getQuantity());
-        articleDto.setHighPriority(articleEntity.isHighPriority());
-        articleDto.setLocation(articleEntity.getLocation());
-        articleDto.setWeekendSpecial(articleEntity.isWeekendSpecial());
-        articleDto.setNonRegularUserSpecial(articleEntity.isNonRegularUserSpecial());
+        articleDto.setDescription(articleEntity.getDescription());
+        articleDto.setSeasonalDemand(articleEntity.getSeasonalDemand());
+        articleDto.setSupplierReliability(articleEntity.getSupplierReliability());
 
-        // Additional fields can be set here
-
+        articleDto.setReplenishmentLeadTime(articleEntity.getReplenishmentLeadTime());
         return articleDto;
     }
 
@@ -33,18 +30,9 @@ public class ArticleConverter {
         if (articleDto == null) {
             return null;
         }
-
         ArticleEntity articleEntity = new ArticleEntity();
-        articleEntity.setId(articleDto.getId());
         articleEntity.setName(articleDto.getName());
-        articleEntity.setQuantity(articleDto.getQuantity());
-        articleEntity.setHighPriority(articleDto.isHighPriority());
-        articleEntity.setLocation(articleDto.getLocation());
-        articleEntity.setWeekendSpecial(articleDto.isWeekendSpecial());
-        articleEntity.setNonRegularUserSpecial(articleDto.isNonRegularUserSpecial());
-
-        // Additional fields can be set here
-
+        articleEntity.setDescription(articleDto.getDescription());
         return articleEntity;
     }
 }

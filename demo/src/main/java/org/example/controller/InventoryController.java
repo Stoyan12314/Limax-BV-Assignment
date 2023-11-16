@@ -3,6 +3,9 @@ package org.example.controller;
 
 import lombok.AllArgsConstructor;
 import org.example.buisness.InventoryService;
+import org.example.controller.converters.InventoryConverter;
+import org.example.controller.converters.InventoryItemRequestConverter;
+import org.example.controller.dto.CreateInventoryItemRequest;
 import org.example.domain.InventoryItem;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,8 +20,10 @@ public class InventoryController {
     private final InventoryService inventoryService;
 
     @PostMapping
-    public ResponseEntity<InventoryItem> createInventoryItem(@RequestBody InventoryItem inventoryItem) {
-        InventoryItem savedInventoryItem = inventoryService.saveInventoryItem(inventoryItem);
+    public ResponseEntity<InventoryItem> createInventoryItem(@RequestBody CreateInventoryItemRequest inventoryItem) {
+        
+        InventoryItem savedInventoryItem = inventoryService.saveInventoryItem(InventoryItemRequestConverter.convert(inventoryItem));
+
         return ResponseEntity.ok(savedInventoryItem);
     }
 

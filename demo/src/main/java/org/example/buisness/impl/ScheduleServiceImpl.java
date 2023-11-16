@@ -4,11 +4,18 @@ import lombok.AllArgsConstructor;
 import org.example.buisness.ScheduleService;
 import org.example.buisness.exceptions.ScheduleNotFoundException;
 import org.example.controller.converters.ScheduleConverter;
+import org.example.domain.InventoryItem;
 import org.example.domain.Schedule;
+import org.example.domain.Status;
+import org.example.persistence.FarmerRepository;
+import org.example.persistence.InventoryRepository;
 import org.example.persistence.ScheduleRepository;
+import org.example.persistence.entity.FarmerEntity;
+import org.example.persistence.entity.InventoryItemEntity;
 import org.example.persistence.entity.ScheduleEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,6 +23,13 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class ScheduleServiceImpl implements ScheduleService {
     private final ScheduleRepository scheduleRepository;
+    private final InventoryRepository inventoryRepository;
+    private final FarmerRepository farmerRepository;
+
+
+    private LocalDate determineScheduleDate() {
+        return LocalDate.now().plusDays(1);
+    }
     @Override
     public Schedule createSchedule(Schedule scheduleDto) {
         ScheduleEntity scheduleEntity = ScheduleConverter.dtoToEntity(scheduleDto);

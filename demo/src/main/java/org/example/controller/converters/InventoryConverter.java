@@ -1,6 +1,7 @@
 package org.example.controller.converters;
 
 import org.example.domain.InventoryItem;
+import org.example.domain.Location;
 import org.example.persistence.entity.ArticleEntity;
 import org.example.persistence.entity.InventoryItemEntity;
 
@@ -17,6 +18,7 @@ public class InventoryConverter {
         inventoryItemDto.setId(inventoryItemEntity.getId());
         inventoryItemDto.setQuantity(inventoryItemEntity.getQuantity());
         inventoryItemDto.setLocation(inventoryItemEntity.getLocation());
+        inventoryItemDto.setArticleId(inventoryItemEntity.getArticleId());
 
 
         return inventoryItemDto;
@@ -28,10 +30,14 @@ public class InventoryConverter {
             return null;
         }
 
+
         InventoryItemEntity inventoryItemEntity = new InventoryItemEntity();
-        inventoryItemEntity.setArticle(inventoryItemDto.getArticleId());
-        inventoryItemEntity.setQuantity(inventoryItemDto.getQuantity());
+        inventoryItemEntity.setId(inventoryItemDto.getId());
         inventoryItemEntity.setLocation(inventoryItemDto.getLocation());
+        inventoryItemEntity.setPriority(inventoryItemDto.getIsHighPriority());
+        inventoryItemEntity.setIsWeekend(inventoryItemDto.getIsWeekend());
+        inventoryItemEntity.setQuantity(inventoryItemDto.getQuantity());
+        inventoryItemEntity.setArticleId(inventoryItemDto.getArticleId());
 
 
         return inventoryItemEntity;

@@ -2,17 +2,24 @@ package org.example.domain;
 
 import lombok.*;
 
+import java.time.Duration;
+import java.util.Date;
+import java.util.Set;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Getter
 @Setter
 public class Article {
-    private Long id;
+
+    private Long articleId;
     private String name;
-    private int quantity;
-    private boolean isHighPriority;
-    private String location; // Can still be a string or an enum depending on how you want to represent it in the API
-    private boolean isWeekendSpecial;
-    private boolean isNonRegularUserSpecial;
+    private String description;
+    private Supplier supplierReliability;
+    private Set<Season> seasonalDemand;
+    private Duration replenishmentLeadTime;
+
+
+
 }

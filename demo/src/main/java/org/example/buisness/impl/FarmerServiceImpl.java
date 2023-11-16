@@ -7,6 +7,7 @@ import org.example.buisness.exceptions.FarmerNotFoundException;
 import org.example.controller.converters.FarmerConverter;
 import org.example.domain.Farmer;
 import org.example.persistence.FarmerRepository;
+import org.example.persistence.InventoryRepository;
 import org.example.persistence.entity.FarmerEntity;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,6 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class FarmerServiceImpl implements FarmerService {
     private final FarmerRepository farmerRepository;
-
     @Override
     public Farmer createFarmer(Farmer farmerDto) {
         FarmerEntity farmerEntity = FarmerConverter.dtoToEntity(farmerDto);

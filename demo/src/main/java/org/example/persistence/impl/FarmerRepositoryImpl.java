@@ -19,6 +19,11 @@ public class FarmerRepositoryImpl implements FarmerRepository {
     }
 
     @Override
+    public List<FarmerEntity> returnFreeFarmer() {
+        return jpaFarmerRepository.findAllFarmersWithoutSchedules();
+    }
+
+    @Override
     public Optional<FarmerEntity> findById(Long id) {
         return jpaFarmerRepository.findById(id);
     }

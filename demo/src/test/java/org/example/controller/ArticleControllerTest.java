@@ -37,13 +37,14 @@ class ArticleControllerTest {
     @Test
     void createArticleTest() throws Exception {
         Article article = new Article();
-        when(articleService.saveArticle(any(Article.class))).thenReturn(article);
+        Long expectedArticleId = 1L; // Example ID
+        when(articleService.saveArticle(any(Article.class))).thenReturn(expectedArticleId);
 
         mockMvc.perform(MockMvcRequestBuilders.post("/articles")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(article)))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(article.getId()));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(expectedArticleId));
 
         verify(articleService, times(1)).saveArticle(any(Article.class));
     }
@@ -57,7 +58,7 @@ class ArticleControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/articles/" + id))
                 .andDo(print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(article.getId()));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(article.getArticleId()));
 
         verify(articleService, times(1)).getArticle(id);
     }

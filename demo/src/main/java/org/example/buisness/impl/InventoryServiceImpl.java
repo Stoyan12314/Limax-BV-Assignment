@@ -13,8 +13,10 @@ import org.example.persistence.ArticleRepository;
 import org.example.persistence.InventoryRepository;
 import org.example.persistence.entity.ArticleEntity;
 import org.example.persistence.entity.InventoryItemEntity;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.time.Clock;
 import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalDate;
@@ -28,13 +30,20 @@ public class InventoryServiceImpl implements InventoryService {
 
     private final InventoryRepository inventoryRepository;
     private final ArticleRepository articleRepository;
+    private final Clock clock;
+    @Value("${inventory.max-capacity}")
+    private int maxCapacity;
+
+    @Value("${inventory.threshold-percentage}")
+    private double thresholdPercentage;
 
     private boolean isWeekend() {
-        DayOfWeek today = LocalDate.now().getDayOfWeek();
+        DayOfWeek today = LocalDate.now(clock).getDayOfWeek();
         return today == DayOfWeek.SATURDAY || today == DayOfWeek.SUNDAY;
     }
+
     private Season getCurrentSeason() {
-        int month = LocalDate.now().getMonthValue();
+        int month = LocalDate.now(clock).getMonthValue();
         if (month >= 3 && month <= 5) {
             return Season.SPRING;
         } else if (month >= 6 && month <= 8) {
@@ -51,33 +60,25 @@ public class InventoryServiceImpl implements InventoryService {
             return false;
         }
 
-        int maxCapacity = 100; // Fixed max capacity for each article
-        double thresholdPercentage = 0.2; // Example: 20% of max capacity
         int thresholdQuantity = (int) (maxCapacity * thresholdPercentage);
 
         boolean isLowStock = quantity < thresholdQuantity;
         boolean isSeasonalDemand = checkSeasonalDemand(article);
-        boolean isLongReplenishmentTime = false;
-        boolean isUnreliableSupplier = false;
-
-        // Check for null in replenishmentLeadTime and supplierReliability
-        if (article.getReplenishmentLeadTime() != null) {
-            isLongReplenishmentTime = article.getReplenishmentLeadTime().compareTo(Duration.ofDays(5)) > 0;
-        }
-        if (article.getSupplierReliability() != null) {
-            isUnreliableSupplier = article.getSupplierReliability().equals(Supplier.Low);
-        }
+        boolean isLongReplenishmentTime = Optional.ofNullable(article.getReplenishmentLeadTime())
+                .map(leadTime -> leadTime.compareTo(Duration.ofDays(5)) > 0)
+                .orElse(false);
+        boolean isUnreliableSupplier = Optional.ofNullable(article.getSupplierReliability())
+                .map(reliability -> reliability.equals(Supplier.Low))
+                .orElse(false);
 
         return isLowStock || isSeasonalDemand || isLongReplenishmentTime || isUnreliableSupplier;
     }
 
     private boolean checkSeasonalDemand(Article article) {
-        if (article == null || article.getSeasonalDemand() == null) {
-            return false;
-        }
-
-        Season currentSeason = getCurrentSeason();
-        return article.getSeasonalDemand().contains(currentSeason);
+        return Optional.ofNullable(article)
+                .map(Article::getSeasonalDemand)
+                .map(seasons -> seasons.contains(getCurrentSeason()))
+                .orElse(false);
     }
     @Override
     public InventoryItem updateInventoryItem(InventoryItem inventoryItem) {
@@ -88,8 +89,6 @@ public class InventoryServiceImpl implements InventoryService {
         }
 
         InventoryItemEntity existingEntity = InventoryConverter.dtoToEntity(inventoryItem);
-        List<InventoryItemEntity> all =  inventoryRepository.findAll();
-
         InventoryItemEntity savedEntity = inventoryRepository.update(existingEntity);
         return InventoryConverter.entityToDto(savedEntity);
     }

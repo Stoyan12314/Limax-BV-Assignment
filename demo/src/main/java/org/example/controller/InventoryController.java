@@ -3,7 +3,6 @@ package org.example.controller;
 
 import lombok.AllArgsConstructor;
 import org.example.buisness.InventoryService;
-import org.example.controller.converters.InventoryConverter;
 import org.example.controller.converters.InventoryItemRequestConverter;
 import org.example.controller.dto.CreateInventoryItemRequest;
 import org.example.domain.InventoryItem;
@@ -21,9 +20,7 @@ public class InventoryController {
 
     @PostMapping
     public ResponseEntity<InventoryItem> createInventoryItem(@RequestBody CreateInventoryItemRequest inventoryItem) {
-        
         InventoryItem savedInventoryItem = inventoryService.saveInventoryItem(InventoryItemRequestConverter.convert(inventoryItem));
-
         return ResponseEntity.ok(savedInventoryItem);
     }
 
@@ -37,6 +34,14 @@ public class InventoryController {
     public ResponseEntity<List<InventoryItem>> getAllInventoryItems() {
         List<InventoryItem> inventoryItems = inventoryService.getAllInventoryItems();
         return ResponseEntity.ok(inventoryItems);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<InventoryItem> updateInventoryItem(@PathVariable Long id, @RequestBody CreateInventoryItemRequest updateRequest) {
+        InventoryItem updatedInventoryItem = InventoryItemRequestConverter.convert(updateRequest);
+        updatedInventoryItem.setId(id); // Set the ID from the path variable to ensure correct item is updated
+        updatedInventoryItem = inventoryService.updateInventoryItem(updatedInventoryItem);
+        return ResponseEntity.ok(updatedInventoryItem);
     }
 
     @DeleteMapping("/{id}")

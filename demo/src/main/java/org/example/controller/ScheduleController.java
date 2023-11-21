@@ -16,8 +16,8 @@ public class ScheduleController {
     private final ScheduleService scheduleService;
 
     @PostMapping
-    public ResponseEntity<Schedule> createSchedule(@RequestBody Schedule schedule) {
-        Schedule savedSchedule = scheduleService.createSchedule(schedule);
+    public ResponseEntity<Schedule> createSchedule() {
+        Schedule savedSchedule = scheduleService.createSchedule();
         return ResponseEntity.ok(savedSchedule);
     }
 

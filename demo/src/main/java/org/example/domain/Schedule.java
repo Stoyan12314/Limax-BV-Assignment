@@ -13,14 +13,9 @@ import java.time.LocalTime;
 @Builder
 public class Schedule {
     private Long id;
-
     private Long farmerId;
-
     private LocalDate date;
-
-
     private Long inventoryItemId;
-
     private Status status;
 
 }

@@ -3,6 +3,7 @@ package org.example.persistence.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.example.domain.InventoryItem;
+import org.example.domain.Location;
 
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -19,7 +20,6 @@ public class FarmerEntity {
     private Long id;
 
     private String name;
-    private String location;
     private boolean isSpecialStatus;
     private Long scheduleId;
 

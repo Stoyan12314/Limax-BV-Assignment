@@ -1,8 +1,14 @@
 package org.example.buisness.impl;
 
 import org.example.buisness.exceptions.ScheduleNotFoundException;
+import org.example.domain.Location;
 import org.example.domain.Schedule;
+import org.example.domain.Status;
+import org.example.persistence.FarmerRepository;
+import org.example.persistence.InventoryRepository;
 import org.example.persistence.ScheduleRepository;
+import org.example.persistence.entity.FarmerEntity;
+import org.example.persistence.entity.InventoryItemEntity;
 import org.example.persistence.entity.ScheduleEntity;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,6 +17,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -25,21 +32,31 @@ class ScheduleServiceImplTest {
     @Mock
     private ScheduleRepository scheduleRepository;
 
+    @Mock
+    private FarmerRepository farmerRepository;
+
+    @Mock
+    private InventoryRepository inventoryRepository;
+
     @InjectMocks
     private ScheduleServiceImpl scheduleService;
 
     @Test
     @DisplayName("Should create and return a schedule")
     void createScheduleTest() {
-        Schedule scheduleDto = new Schedule(); // Prepare your Schedule DTO
-        ScheduleEntity scheduleEntity = new ScheduleEntity(); // Assume this is what dtoToEntity would return
+        FarmerEntity freeFarmer = new FarmerEntity(1L, "John Doe", true, 1L, 1L);
+        InventoryItemEntity highPriorityItem = new InventoryItemEntity(1L, 2L, true, true, 50, Location.WestLocation);
+        ScheduleEntity scheduleEntity = new ScheduleEntity(1L, 1L, LocalDate.now(), 1L, Status.InProgress);
 
+        when(farmerRepository.returnFreeFarmer()).thenReturn(Optional.of(freeFarmer));
+        when(inventoryRepository.findAllHighPriorityItems()).thenReturn(Optional.of(highPriorityItem));
         when(scheduleRepository.save(any(ScheduleEntity.class))).thenReturn(scheduleEntity);
 
-        Schedule createdSchedule = scheduleService.createSchedule(scheduleDto);
+        Schedule result = scheduleService.createSchedule();
 
-        assertNotNull(createdSchedule);
-        verify(scheduleRepository).save(any(ScheduleEntity.class));
+        assertNotNull(result);
+        assertEquals(freeFarmer.getId(), result.getFarmerId());
+        assertEquals(highPriorityItem.getId(), result.getInventoryItemId());
     }
 
     @Test
@@ -81,9 +98,13 @@ class ScheduleServiceImplTest {
     @Test
     @DisplayName("Should update and return a schedule")
     void updateScheduleTest() {
-        Schedule scheduleDto = new Schedule();
+
+        Schedule scheduleDto = new Schedule(1L, 2L, LocalDate.now(), 3L, Status.InProgress);
+
+
+
         scheduleDto.setId(1L);
-        ScheduleEntity scheduleEntity = new ScheduleEntity(); // Updated entity
+        ScheduleEntity scheduleEntity = new ScheduleEntity(1L, 2L, LocalDate.now(), 3L, Status.Done);
 
         when(scheduleRepository.findById(scheduleDto.getId())).thenReturn(Optional.of(scheduleEntity));
         when(scheduleRepository.save(any(ScheduleEntity.class))).thenReturn(scheduleEntity);

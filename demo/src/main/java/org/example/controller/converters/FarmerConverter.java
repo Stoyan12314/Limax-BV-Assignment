@@ -14,7 +14,6 @@ public class FarmerConverter {
         Farmer farmerDto = new Farmer();
         farmerDto.setId(farmerEntity.getId());
         farmerDto.setName(farmerEntity.getName());
-        farmerDto.setLocation(farmerEntity.getLocation());
         farmerDto.setSpecialStatus(farmerEntity.isSpecialStatus());
         farmerDto.setInventoryItemId(farmerDto.getInventoryItemId());
 
@@ -30,7 +29,6 @@ public class FarmerConverter {
         FarmerEntity farmerEntity = new FarmerEntity();
         farmerEntity.setId(farmerDto.getId());
         farmerEntity.setName(farmerDto.getName());
-        farmerEntity.setLocation(farmerDto.getLocation());
         farmerEntity.setSpecialStatus(farmerDto.isSpecialStatus());
         farmerEntity.setInventoryItemId(farmerDto.getInventoryItemId());
 

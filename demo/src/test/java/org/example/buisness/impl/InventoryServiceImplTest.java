@@ -38,13 +38,12 @@ class InventoryServiceImplTest {
         ArticleRepository articleRepository = mock(ArticleRepository.class);
 
         Clock clock = mock(Clock.class);
-        // Configure the mocked Clock
-        Instant fixedInstant = Instant.parse("2023-01-01T10:00:00Z"); // Example instant
-        ZoneId fixedZoneId = ZoneOffset.UTC; // Example zone
+        Instant fixedInstant = Instant.parse("2023-01-01T10:00:00Z");
+        ZoneId fixedZoneId = ZoneOffset.UTC;
         when(clock.instant()).thenReturn(fixedInstant);
         when(clock.getZone()).thenReturn(fixedZoneId);
-        int maxCapacity = 100; // Example max capacity value
-        double thresholdPercentage = 0.2; // Example threshold percentage
+        int maxCapacity = 100;
+        double thresholdPercentage = 0.2;
 
         InventoryServiceImpl inventoryService = new InventoryServiceImpl(
                 inventoryRepository, articleRepository, clock, maxCapacity, thresholdPercentage
@@ -68,6 +67,7 @@ class InventoryServiceImplTest {
                 .quantity(50)
                 .location(Location.EastLocation)
                 .articleId(2L)
+
                 .isHighPriority(true)
                 .IsWeekend(false)
                 .farmerId(3L)
@@ -98,9 +98,9 @@ class InventoryServiceImplTest {
         InventoryRepository inventoryRepository = mock(InventoryRepository.class);
         ArticleRepository articleRepository = mock(ArticleRepository.class);
 
-        Clock clock = mock(Clock.class); // Mocked Clock object
-        int maxCapacity = 100; // Example max capacity value
-        double thresholdPercentage = 0.2; // Example threshold percentage
+        Clock clock = mock(Clock.class);
+        int maxCapacity = 100;
+        double thresholdPercentage = 0.2;
 
         InventoryServiceImpl inventoryService = new InventoryServiceImpl(inventoryRepository, articleRepository, clock, maxCapacity, thresholdPercentage);
         long nonExistentArticleId = 99L;
@@ -122,9 +122,9 @@ class InventoryServiceImplTest {
         InventoryRepository inventoryRepository = mock(InventoryRepository.class);
         ArticleRepository articleRepository = mock(ArticleRepository.class);
 
-        Clock clock = mock(Clock.class); // Mocked Clock object
-        int maxCapacity = 100; // Example max capacity value
-        double thresholdPercentage = 0.2; // Example threshold percentage
+        Clock clock = mock(Clock.class);
+        int maxCapacity = 100;
+        double thresholdPercentage = 0.2;
 
         InventoryServiceImpl inventoryService = new InventoryServiceImpl(inventoryRepository, articleRepository, clock, maxCapacity, thresholdPercentage);
         long invalidId = -1L;
@@ -139,9 +139,9 @@ class InventoryServiceImplTest {
     void deleteNonExistentInventoryItemTest() {
         InventoryRepository inventoryRepository = mock(InventoryRepository.class);
         ArticleRepository articleRepository = mock(ArticleRepository.class);
-        Clock clock = mock(Clock.class); // Mocked Clock object
-        int maxCapacity = 100; // Example max capacity value
-        double thresholdPercentage = 0.2; // Example threshold percentage
+        Clock clock = mock(Clock.class);
+        int maxCapacity = 100;
+        double thresholdPercentage = 0.2;
 
         InventoryServiceImpl inventoryService = new InventoryServiceImpl(inventoryRepository, articleRepository, clock, maxCapacity, thresholdPercentage);
         long nonExistentItemId = 99L;
@@ -157,9 +157,9 @@ class InventoryServiceImplTest {
     void getInventoryItemNotFoundTest() {
         InventoryRepository inventoryRepository = mock(InventoryRepository.class);
         ArticleRepository articleRepository = mock(ArticleRepository.class);
-        Clock clock = mock(Clock.class); // Mocked Clock object
-        int maxCapacity = 100; // Example max capacity value
-        double thresholdPercentage = 0.2; // Example threshold percentage
+        Clock clock = mock(Clock.class);
+        int maxCapacity = 100;
+        double thresholdPercentage = 0.2;
 
         InventoryServiceImpl inventoryService = new InventoryServiceImpl(inventoryRepository, articleRepository, clock, maxCapacity, thresholdPercentage);
 
@@ -175,9 +175,9 @@ class InventoryServiceImplTest {
         InventoryRepository inventoryRepository = mock(InventoryRepository.class);
         ArticleRepository articleRepository = mock(ArticleRepository.class);
 
-        Clock clock = mock(Clock.class); // Mocked Clock object
-        int maxCapacity = 100; // Example max capacity value
-        double thresholdPercentage = 0.2; // Example threshold percentage
+        Clock clock = mock(Clock.class);
+        int maxCapacity = 100;
+        double thresholdPercentage = 0.2;
         InventoryServiceImpl inventoryService = new InventoryServiceImpl(inventoryRepository, articleRepository, clock, maxCapacity, thresholdPercentage);
 
         long id = 1L;
@@ -194,9 +194,9 @@ class InventoryServiceImplTest {
     void deleteInventoryItemByIdTest() {
         InventoryRepository inventoryRepository = mock(InventoryRepository.class);
         ArticleRepository articleRepository = mock(ArticleRepository.class);
-        Clock clock = mock(Clock.class); // Mocked Clock object
-        int maxCapacity = 100; // Example max capacity value
-        double thresholdPercentage = 0.2; // Example threshold percentage
+        Clock clock = mock(Clock.class);
+        int maxCapacity = 100;
+        double thresholdPercentage = 0.2;
         InventoryServiceImpl inventoryService = new InventoryServiceImpl(inventoryRepository, articleRepository, clock, maxCapacity, thresholdPercentage);
 
         long id = 1L;
@@ -209,30 +209,25 @@ class InventoryServiceImplTest {
     @Test
     @DisplayName("Should get all inventory items")
     void getAllInventoryItemsTest() {
-        // Manually create mocks
         InventoryRepository inventoryRepository = Mockito.mock(InventoryRepository.class);
         ArticleRepository articleRepository = Mockito.mock(ArticleRepository.class);
-        Clock clock = mock(Clock.class); // Mocked Clock object
-        int maxCapacity = 100; // Example max capacity value
-        double thresholdPercentage = 0.2; // Example threshold percentage
+        Clock clock = mock(Clock.class);
+        int maxCapacity = 100;
+        double thresholdPercentage = 0.2;
 
-        // Create an instance of InventoryServiceImpl with mocks
+
         InventoryServiceImpl inventoryService = new InventoryServiceImpl(inventoryRepository, articleRepository, clock, maxCapacity, thresholdPercentage);
 
-        // Create a sample inventory item entity
         InventoryItemEntity inventoryEntity = new InventoryItemEntity();
         inventoryEntity.setId(1L);
         inventoryEntity.setQuantity(50);
         inventoryEntity.setLocation(Location.EastLocation);
         List<InventoryItemEntity> inventoryEntities = Collections.singletonList(inventoryEntity);
 
-        // Mock the behavior of the Inventory Repository
         when(inventoryRepository.findAll()).thenReturn(inventoryEntities);
 
-        // Call the method under test
         List<InventoryItem> results = inventoryService.getAllInventoryItems();
 
-        // Assertions
         assertNotNull(results);
         assertFalse(results.isEmpty());
         assertEquals(1, results.size());
@@ -247,9 +242,9 @@ class InventoryServiceImplTest {
     void shouldUpdateInventoryItem() {
         InventoryRepository inventoryRepository = mock(InventoryRepository.class);
         ArticleRepository articleRepository = mock(ArticleRepository.class);
-        Clock clock = mock(Clock.class); // Mocked Clock object
-        int maxCapacity = 100; // Example max capacity value
-        double thresholdPercentage = 0.2; // Example threshold percentage
+        Clock clock = mock(Clock.class);
+        int maxCapacity = 100;
+        double thresholdPercentage = 0.2;
         InventoryServiceImpl inventoryService = new InventoryServiceImpl(inventoryRepository, articleRepository, clock, maxCapacity, thresholdPercentage);
         Long itemId = 1L;
 
@@ -266,7 +261,6 @@ class InventoryServiceImplTest {
         assertEquals(30, result.getQuantity());
         assertEquals(Location.EastLocation, result.getLocation());
 
-        // Verify that update method was called with any InventoryItemEntity
         verify(inventoryRepository).update(any(InventoryItemEntity.class));
     }
 
@@ -275,9 +269,9 @@ class InventoryServiceImplTest {
     void shouldThrowExceptionForNonExistentItem() {
         InventoryRepository inventoryRepository = mock(InventoryRepository.class);
         ArticleRepository articleRepository = mock(ArticleRepository.class);
-        Clock clock = mock(Clock.class); // Mocked Clock object
-        int maxCapacity = 100; // Example max capacity value
-        double thresholdPercentage = 0.2; // Example threshold percentage
+        Clock clock = mock(Clock.class);
+        int maxCapacity = 100;
+        double thresholdPercentage = 0.2;
         InventoryServiceImpl inventoryService = new InventoryServiceImpl(inventoryRepository, articleRepository, clock, maxCapacity, thresholdPercentage);
         Long itemId = 99L;
         InventoryItem updatedItem = new InventoryItem(itemId, 30, Location.EastLocation, 2L, true, false, 3L);

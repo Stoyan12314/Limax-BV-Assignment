@@ -23,7 +23,6 @@ public class ScheduleEntity {
     private Long farmerId;
 
     private LocalDate date;
-    private LocalTime time;
 
     @JoinColumn(name = "InventortItem")
     private Long inventoryItemId;

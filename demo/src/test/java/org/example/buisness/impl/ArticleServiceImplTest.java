@@ -1,9 +1,7 @@
 package org.example.buisness.impl;
 
 import org.example.buisness.exceptions.ArticleNotFoundException;
-import org.example.controller.converters.ArticleConverter;
 import org.example.domain.Article;
-import org.example.domain.Location;
 import org.example.domain.Season;
 import org.example.domain.Supplier;
 import org.example.persistence.ArticleRepository;
@@ -19,7 +17,6 @@ import java.time.Duration;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -86,7 +83,6 @@ class ArticleServiceImplTest {
     void getAllArticlesTest() {
         Set<Season> seasonalDemand = new HashSet<>();
         seasonalDemand.add(Season.SUMMER);
-        // Create a populated ArticleEntity
         ArticleEntity articleEntity = new ArticleEntity(1L, "Test Article", "something",Supplier.High, seasonalDemand, Duration.ofDays(2) );
         List<ArticleEntity> articleEntities = Collections.singletonList(articleEntity);
 

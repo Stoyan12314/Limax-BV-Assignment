@@ -22,8 +22,8 @@ public class FarmerEntity {
     private String location;
     private boolean isSpecialStatus;
     private Long scheduleId;
-    @ManyToOne
+
     @JoinColumn(name = "inventoryItem_id", nullable = false)
-    private InventoryItemEntity inventoryItem;
+    private Long inventoryItemId;
 
 }

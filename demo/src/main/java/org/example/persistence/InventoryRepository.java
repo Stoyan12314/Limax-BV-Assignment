@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface InventoryRepository {
-    List<InventoryItemEntity> findAllHighPriorityItems();
+    Optional<InventoryItemEntity> findAllHighPriorityItems();
     InventoryItemEntity save(InventoryItemEntity inventoryItemEntity);
     Optional<InventoryItemEntity> findById(Long id);
     InventoryItemEntity update(InventoryItemEntity inventoryItemEntity);

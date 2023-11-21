@@ -9,7 +9,6 @@ public class ScheduleConverter {
     private ScheduleConverter() {
     }
 
-    // Converts a ScheduleEntity to a Schedule (DTO)
     public static Schedule entityToDto(ScheduleEntity scheduleEntity) {
         if (scheduleEntity == null) {
             return null;
@@ -25,7 +24,6 @@ public class ScheduleConverter {
         return scheduleDto;
     }
 
-    // Converts a Schedule (DTO) to a ScheduleEntity
     public static ScheduleEntity dtoToEntity(Schedule scheduleDto) {
 
 

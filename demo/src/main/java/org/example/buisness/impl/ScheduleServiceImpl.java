@@ -4,9 +4,7 @@ import lombok.AllArgsConstructor;
 import org.example.buisness.ScheduleService;
 import org.example.buisness.exceptions.ScheduleNotFoundException;
 import org.example.controller.converters.ScheduleConverter;
-import org.example.domain.InventoryItem;
 import org.example.domain.Schedule;
-import org.example.domain.Status;
 import org.example.persistence.FarmerRepository;
 import org.example.persistence.InventoryRepository;
 import org.example.persistence.ScheduleRepository;
@@ -17,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,15 +25,46 @@ public class ScheduleServiceImpl implements ScheduleService {
     private final InventoryRepository inventoryRepository;
     private final FarmerRepository farmerRepository;
 
+    public Schedule autoCreateScheduleForFreeFarmer() {
+        Optional<FarmerEntity> freeFarmer = farmerRepository.returnFreeFarmer();
+
+
+        ScheduleEntity scheduleEntity = new ScheduleEntity();
+        scheduleEntity.setDate(determineScheduleDate());
+        scheduleEntity.setFarmerId(freeFarmer.get().getId());
+
+        scheduleEntity = scheduleRepository.save(scheduleEntity);
+
+        return ScheduleConverter.entityToDto(scheduleEntity);
+    }
+
 
     private LocalDate determineScheduleDate() {
         return LocalDate.now().plusDays(1);
     }
+
+
+    public Schedule autoCreateSchedule() {
+        Optional<FarmerEntity> freeFarmer = farmerRepository.returnFreeFarmer();
+
+
+        Optional<InventoryItemEntity> highPriorityItem = inventoryRepository.findAllHighPriorityItems();
+
+
+        ScheduleEntity scheduleEntity = new ScheduleEntity();
+        scheduleEntity.setDate(determineScheduleDate());
+        scheduleEntity.setFarmerId(freeFarmer.get().getId());
+        scheduleEntity.setInventoryItemId(highPriorityItem.get().getId());
+
+        scheduleEntity = scheduleRepository.save(scheduleEntity);
+
+        return ScheduleConverter.entityToDto(scheduleEntity);
+    }
+
     @Override
     public Schedule createSchedule(Schedule scheduleDto) {
-        ScheduleEntity scheduleEntity = ScheduleConverter.dtoToEntity(scheduleDto);
-        scheduleEntity = scheduleRepository.save(scheduleEntity);
-        return scheduleDto;
+
+        return autoCreateSchedule();
     }
 
     @Override

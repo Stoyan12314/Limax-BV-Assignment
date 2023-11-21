@@ -4,7 +4,6 @@ package org.example.controller.converters;
 import org.example.domain.Article;
 import org.example.persistence.entity.ArticleEntity;
 
-import java.time.Duration;
 
 
 public class ArticleConverter {
@@ -25,7 +24,6 @@ public class ArticleConverter {
         return articleDto;
     }
 
-    // Converts an ArticleDTO to an ArticleEntity
     public static ArticleEntity dtoToEntity(Article articleDto) {
         if (articleDto == null) {
             return null;

@@ -13,14 +13,15 @@ import java.util.Optional;
 @AllArgsConstructor
 public class FarmerRepositoryImpl implements FarmerRepository {
     private final JPAFarmerRepository jpaFarmerRepository;
+
     @Override
     public FarmerEntity save(FarmerEntity farmerEntity) {
         return jpaFarmerRepository.save(farmerEntity);
     }
 
     @Override
-    public List<FarmerEntity> returnFreeFarmer() {
-        return jpaFarmerRepository.findAllFarmersWithoutSchedules();
+    public Optional<FarmerEntity> returnFreeFarmer() {
+        return jpaFarmerRepository.findFarmersWithoutInventoryItem();
     }
 
     @Override

@@ -8,7 +8,6 @@ import org.example.persistence.entity.InventoryItemEntity;
 public class InventoryConverter {
     private InventoryConverter() {
     }
-    // Converts an InventoryItemEntity to an InventoryItem (DTO)
     public static InventoryItem entityToDto(InventoryItemEntity inventoryItemEntity) {
         if (inventoryItemEntity == null) {
             return null;
@@ -24,7 +23,6 @@ public class InventoryConverter {
         return inventoryItemDto;
     }
 
-    // Converts an InventoryItem (DTO) to an InventoryItemEntity
     public static InventoryItemEntity dtoToEntity(InventoryItem inventoryItemDto) {
         if (inventoryItemDto == null) {
             return null;

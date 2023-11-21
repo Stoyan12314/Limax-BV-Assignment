@@ -7,7 +7,6 @@ import org.example.buisness.exceptions.FarmerNotFoundException;
 import org.example.controller.converters.FarmerConverter;
 import org.example.domain.Farmer;
 import org.example.persistence.FarmerRepository;
-import org.example.persistence.InventoryRepository;
 import org.example.persistence.entity.FarmerEntity;
 import org.springframework.stereotype.Service;
 
@@ -44,8 +43,7 @@ public class FarmerServiceImpl implements FarmerService {
     public Farmer updateFarmer(Long id, Farmer farmerDto) {
         FarmerEntity farmerEntity = farmerRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Farmer not found"));
-        // Update the entity's fields here
-        farmerEntity = farmerRepository.save(farmerEntity);
+        farmerRepository.save(farmerEntity);
         return farmerDto;
     }
 

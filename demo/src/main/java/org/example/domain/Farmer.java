@@ -15,5 +15,5 @@ public class Farmer {
     private String name;
     private String location;
     private boolean isSpecialStatus;
-
+    private Long inventoryItemId;
 }

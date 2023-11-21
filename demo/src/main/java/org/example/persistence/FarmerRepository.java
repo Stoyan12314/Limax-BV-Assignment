@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface FarmerRepository {
-    List<FarmerEntity> returnFreeFarmer();
+    Optional<FarmerEntity> returnFreeFarmer();
     FarmerEntity save(FarmerEntity farmerEntity);
     Optional<FarmerEntity> findById(Long id);
     List<FarmerEntity> findAll();
